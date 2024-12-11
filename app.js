@@ -3,18 +3,18 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require("cors");
+const fileUpload = require('express-fileupload');
+
+require('dotenv').config()
 
 //mongoose
 const mongoose = require("mongoose");
-// require("./models/users/UserModels");
 
 // Connect to DB
-mongoose.connect("mongodb+srv://vvsy819:CtEpChWuVnuQ8Kzu@cluster0.qpp9t.mongodb.net/tênDB?retryWrites=true&w=majority", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+mongoose.connect(process.env.MONGO_URL)
     .then(() =>
-        console.log(">>>>>>>>>> MongoDB Connected successfully ✅ !!!!!!")
+        console.log(">>>>>>>>>> MongoDB Connected successfully ✅ !!!!!! ")
     )
     .catch((err) => console.log(">>>>>>>>> DB Error: ❎", err));
 
@@ -23,18 +23,33 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions = { origin: true };
+  callback(null, corsOptions); 
+};
+
+// config file upload
+// default options
+app.use(fileUpload());
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors(corsOptionsDelegate));
+
+//Khai báo route
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/v1/api/', usersRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
