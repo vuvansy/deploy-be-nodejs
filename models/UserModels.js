@@ -5,6 +5,7 @@ const ObjectId = Schema.ObjectId;
 const user = new Schema({
     id: { type: ObjectId },
     fullname: { type: String },
+    image: { type: String },
 }, { timestamps: true });
 
 module.exports = mongoose.models.user || mongoose.model("user", user);

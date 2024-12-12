@@ -19,6 +19,8 @@ router.delete('/users', deleteUserAPI);
 router.post('/file', postUploadSingleFileApi);
 router.post('/files', postUploadMultipleFilesAPI);
 
+router.post('/customers', postUploadMultipleFilesAPI);
+
 module.exports = router;
 
 
