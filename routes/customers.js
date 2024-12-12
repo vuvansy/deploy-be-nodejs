@@ -20,5 +20,13 @@ router.put('/customers', putUpdateCustomers);
 router.delete('/customers', deleteACustomer);
 router.delete('/customers-many', deleteArrayCustomer);
 
+router.get('/info', (req, res) => {
+    console.log(">> check query; ", req.query)
+    return res.status(200).json({
+        data: req.query
+    })
+});
+
+
 
 module.exports = router;
