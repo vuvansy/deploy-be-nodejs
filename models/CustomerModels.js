@@ -4,7 +4,7 @@ const ObjectId = Schema.ObjectId;
 
 const customer = new Schema({
     id: { type: ObjectId },
-    name: { type: String, require: true },
+    name: { type: String, required: true },
     address: { type: String },
     phone: { type: String },
     email: { type: String },

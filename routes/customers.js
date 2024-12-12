@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const { postCreateCustomer } = require('../controllers/customerController');
+const { postCreateCustomer,  postCreateArrayCustomer } = require('../controllers/customerController');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -13,5 +13,6 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/customers', postCreateCustomer);
+router.post('/customers-many', postCreateArrayCustomer);
 
 module.exports = router;
