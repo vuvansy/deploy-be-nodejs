@@ -13,7 +13,8 @@ const customer = new Schema({
     image: { type: String },
 }, { timestamps: true });
 
-customer.plugin(mongoose_delete);
+// Override all methods
+customer.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 module.exports = mongoose.models.customer || mongoose.model("customer", customer);
 
