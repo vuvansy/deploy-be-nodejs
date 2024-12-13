@@ -62,10 +62,11 @@ module.exports = {
 
         let limit = req.query.limit; //lấy tham số limit từ query
         let page = req.query.page; //lấy tham số page từ query
+        let name = req.query.name;
         let result = null;
 
         if (limit && page) {
-            result = await getAllCustomerService(limit, page);
+            result = await getAllCustomerService(limit, page, name);
         } else
             result = await getAllCustomerService();
             return res.status(200).json(

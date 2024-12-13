@@ -27,13 +27,20 @@ const createArrayCustomerService = async (arr) => {
     }
 }
 
-const getAllCustomerService = async (limit, page) => {
+const getAllCustomerService = async (limit, page, name) => {
     try {
         let result = null;
 
         if (limit && page) {
             let offset = (page - 1) * limit; //Số lượng bản ghi bỏ qua
-            result = await Customer.find({}).skip(offset).limit(limit).exec(); //Lấy ra số lượng data theo page
+            if (name) {
+                result = await Customer.find(
+                    {
+                        "name": { $regex: '.*' + name + '.*' }
+                    }
+                ).skip(offset).limit(limit).exec();
+            } else
+                result = await Customer.find({}).skip(offset).limit(limit).exec();
 
         } else {
             result = await Customer.find({});
